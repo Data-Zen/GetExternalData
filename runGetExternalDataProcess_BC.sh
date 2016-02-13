@@ -49,7 +49,7 @@ a=1
 #echo  "EndDate: " $enddate
 cd $MyPath
   
-  php ./BrightCove/getBCtags_first.php    
+  php ./BrightCove/getBCtags_first.php      #CHANGETHISSSSSS!!!!!!!!!!!!!!!!!!!!
 
 
 let errorloop=0

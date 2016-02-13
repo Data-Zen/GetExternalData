@@ -35,15 +35,15 @@ curl_setopt($c, CURLOPT_FILE, $fh);
 curl_exec($c);
 curl_close($c);
 */
-
+include './BrightCove/credentials/BrightCoveCredentials.php';
 $host = 'azubu.sftp.paywizard.com';
 $port = 22;
 $username = 'azubu';
 $password = 'LZvuhB0vQYXI';
 $remoteDir = '/outgoing/archive/';
-$localDir = 'paywizardfiles/';
+$localDir = $S3sourceDir."/"."paywizardfiles/";
 if (!file_exists($localDir)) {
-    mkdir($localDir, 0777, true);
+    mkdir($localDir);
 }
 
 
@@ -113,7 +113,7 @@ foreach (scandir($dir) as $entry) {
 }
 var_dump($lastModFile);
 
-include './BrightCove/credentials/BrightCoveCredentials.php';
+
 $outputfile=$S3sourceDir . "/paywizarddata.csv";
 
 #file_put_contents($outputfile, $lastModFile);

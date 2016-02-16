@@ -31,7 +31,7 @@ fi
 
 
 daysback=90
-daysback=1   #CHANGE THIS!!!!!!!!!!!!!!!!!!!!!!!!!
+#daysback=1   #CHANGE THIS!!!!!!!!!!!!!!!!!!!!!!!!!
 daysforward=30
 #daysback=160
 let sleepv=1
@@ -49,7 +49,7 @@ a=1
 #echo  "EndDate: " $enddate
 cd $MyPath
   
-  #php ./BrightCove/getBCtags_first.php      #CHANGETHISSSSSS!!!!!!!!!!!!!!!!!!!!
+  php ./BrightCove/getBCtags_first.php      #CHANGETHISSSSSS!!!!!!!!!!!!!!!!!!!!
 
 
 let errorloop=0

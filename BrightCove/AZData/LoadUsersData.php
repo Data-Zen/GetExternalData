@@ -70,6 +70,9 @@ ID_User BIGINT ENCODE lzo
 ,Channel_Frozen_Date datetime ENCODE lzo
 );
 
+
+GRANT SELECT ON TABLE public.users TO GROUP readonly;
+
   INSERT INTO dev.PUBLIC.users (
                                           ID_User 
                                                  ,Username 
@@ -163,7 +166,32 @@ union
 WHERE rnk = 1;  
 	   
 
-GRANT SELECT ON TABLE public.users TO GROUP readonly;
+";
+
+
+
+echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
+$rec = pg_query($connect,$sql);
+
+$rowsaffected=pg_affected_rows($rec);
+echo "Rows affected $rowsaffected \n\n";
+
+
+
+$sql = "
+
+alter table users add analytics_ignore smallint encode lzo;
+
+update users
+set analytics_ignore=0;
+update users
+set analytics_ignore=1
+WHERE 
+(email ilike '%azubu.com' or email  ilike '%geeksforless%'
+or email  ilike '%deleted%' or email  ilike '%test%' 
+
+);
+
 
 ";
 
@@ -175,6 +203,23 @@ $rec = pg_query($connect,$sql);
 $rowsaffected=pg_affected_rows($rec);
 echo "Rows affected $rowsaffected \n\n";
 
+
+
+$sql = "
+
+UPDATE users
+SET username = trim(lower(replace(replace(username,'-',''),'_','')));
+
+
+";
+
+
+
+echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
+$rec = pg_query($connect,$sql);
+
+$rowsaffected=pg_affected_rows($rec);
+echo "Rows affected $rowsaffected \n\n";
 
 
 ?>

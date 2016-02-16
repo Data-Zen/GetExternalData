@@ -9,6 +9,7 @@ $debug=1;
 /*first log in*/
 $connect = pg_connect($BrightCoveModifyCredentials);
 $sql="
+/*
 UPDATE broadcaster_details
 SET username = trim(lower(replace(replace(username,'-',''),'_','')));
 
@@ -19,7 +20,7 @@ SET azbroadcaster=trim(lower(replace(replace(azbroadcaster,'-',''),'_','')));
 
 UPDATE bc_videos
 SET azbroadcaster=trim(lower(replace(replace(azbroadcaster,'-',''),'_','')));
-
+*/
 drop table if exists public.bc_videos_rollup_backup;
 CREATE TABLE public.bc_videos_rollup_backup
 (
@@ -216,7 +217,7 @@ WHERE NOT EXISTS
 GROUP BY video_reference_id;
 
 
-
+/*
 
 DROP TABLE IF EXISTS PUBLIC.broadcaster_details_rollup;
                 CREATE TABLE PUBLIC.broadcaster_details_rollup (
@@ -395,7 +396,7 @@ FROM
 WHERE rank <= 40
   AND datepart(dow, stdt) = 4 --Only do this on Thursday
 ORDER BY 2;
-
+*/
 
 
 

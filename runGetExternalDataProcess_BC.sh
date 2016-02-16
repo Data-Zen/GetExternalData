@@ -31,7 +31,7 @@ fi
 
 
 daysback=90
-#daysback=1   #CHANGE THIS!!!!!!!!!!!!!!!!!!!!!!!!!
+daysback=1   #CHANGE THIS!!!!!!!!!!!!!!!!!!!!!!!!!
 daysforward=30
 #daysback=160
 let sleepv=1
@@ -49,7 +49,7 @@ a=1
 #echo  "EndDate: " $enddate
 cd $MyPath
   
-  php ./BrightCove/getBCtags_first.php      #CHANGETHISSSSSS!!!!!!!!!!!!!!!!!!!!
+  #php ./BrightCove/getBCtags_first.php      #CHANGETHISSSSSS!!!!!!!!!!!!!!!!!!!!
 
 
 let errorloop=0
@@ -97,9 +97,10 @@ fi
 #date
 ELAPSED_TIME_ZC=$(($SECONDS - $START_TIME))
 START_TIME=$SECONDS
-php ./BrightCove/AZData/GetBroadcasterData_live.php 
-php ./BrightCove/AZData/GetBroadcasterData.php 
+#php ./BrightCove/AZData/GetBroadcasterData_live.php 
+#php ./BrightCove/AZData/GetBroadcasterData.php 
 php ./BrightCove/AZData/LoadUsersData.php
+php ./BrightCove/AZData/FinalUserProcessing.php
 php ./BrightCove/AZData/LoadSubscriptionData.php
 php ./BrightCove/AZData/LoadUserFollow_UnFollowData.php
 php ./BrightCove/AZData/LoadEngagmentDashboardData.php

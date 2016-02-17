@@ -8,7 +8,9 @@ $connect = pg_connect($BrightCoveModifyCredentials);
 
 
 
-$sql = "drop table if exists SubscriptionRevenue_stg;
+$sql = "
+/*
+drop table if exists SubscriptionRevenue_stg;
 
 create table SubscriptionRevenue_stg
 (
@@ -26,7 +28,8 @@ paymentamount float encode BYTEDICT,
 subscontractid bigint encode lzo
 );
 
-
+*/
+truncate table SubscriptionRevenue_stg;
 
 copy SubscriptionRevenue_stg
 from 's3://$S3bucketName/paywizarddata.csv' with 
@@ -34,36 +37,19 @@ credentials 'aws_access_key_id=$S3accessKey;aws_secret_access_key=$S3secretKey'
 csv
 IGNOREHEADER 3
 $S3Region;
-/*
-drop table if exists SubscriptionRevenue;
 
-create table SubscriptionRevenue
-(
-csn BIGINT ENCODE lzo,
-paymenttype VARCHAR(10000) ENCODE lzo,
-accountname VARCHAR(10000) ENCODE lzo,
-paymentaccount VARCHAR(10000) ENCODE lzo,
-customeraccountid bigint ENCODE lzo,
-dt datetime ENCODE lzo,
-paymentstatus VARCHAR(10000) ENCODE lzo,
-paymentid bigint ENCODE lzo,
-refundpaymentid bigint ENCODE lzo,
-authcode VARCHAR(10000) ENCODE lzo,
-paymentamount float encode BYTEDICT,
-subscontractid bigint encode lzo
-);*/
 
+GRANT SELECT ON TABLE public.SubscriptionRevenue TO GROUP readonly;
 
 delete from  SubscriptionRevenue
-where csn in (select csn from subscriptionrevenue_stg where csn is not null)
-;
+where paymentid in (select paymentid from subscriptionrevenue_stg where paymentid is not null);
 insert into SubscriptionRevenue
 SELECT csn
        , paymenttype
        , accountname
        , paymentaccount
        , customeraccountid
-       , dt::datetime
+       ,to_date(dt, 'DD/MM/YY hh:mi:ss')::DATETIME
        , paymentstatus
        , paymentid
        , refundpaymentid
@@ -71,9 +57,9 @@ SELECT csn
        , paymentamount
        , subscontractid
  FROM dev.public.subscriptionrevenue_stg
- where csn not in (select csn from subscriptionrevenue)
+ where paymentid not in (select paymentid from subscriptionrevenue)
  ;
-GRANT SELECT ON TABLE public.SubscriptionRevenue TO GROUP readonly;
+
 
 ";
 

@@ -71,9 +71,42 @@ while (false !== ($file = readdir($dir)))
 }
 
 
+$lastMod = "";
+$lastModFile = '';
+
+$latest_ctime = 0;
+$latest_filename = '';    
+
+
 
 foreach ($files as $file)
 {
+    $statinfo = ssh2_sftp_stat($stream, "{$remoteDir}{$file}");
+
+#$filesize = $statinfo['size'];
+#$group = $statinfo['gid'];
+#$owner = $statinfo['uid'];
+$atime = $statinfo['atime'];
+$mtime = $statinfo['mtime'];
+#$mode = $statinfo['mode'];
+/*
+echo $file;
+echo "\n";
+echo $mtime;
+echo "\n";
+echo $atime;
+echo "\n";
+*/
+if ($mtime > $latest_ctime) {
+    $latest_ctime = $mtime ;
+    $latest_filename = $file;
+  }
+
+}
+echo "Latest File: $latest_filename\n";
+
+$file=$latest_filename;
+
     echo "Copying file: $file\n";
     if (!$remote = @fopen("ssh2.sftp://{$stream}/{$remoteDir}{$file}", 'r'))
     {
@@ -89,6 +122,47 @@ foreach ($files as $file)
 
     $read = 0;
     $filesize = filesize("ssh2.sftp://{$stream}/{$remoteDir}{$file}");
+
+
+
+    while ($read < $filesize && ($buffer = fread($remote, $filesize - $read)))
+    {
+        $read += strlen($buffer);
+        if (fwrite($local, $buffer) === FALSE)
+        {
+            echo "Unable to write to local file: $file\n";
+            break;
+        }
+    }
+    fclose($local);
+    fclose($remote);
+
+
+$copywholedirectory =0;
+
+if ($copywholedirectory =1)
+{
+foreach ($files as $file)
+{
+
+    echo "Copying file: $file\n";
+    if (!$remote = @fopen("ssh2.sftp://{$stream}/{$remoteDir}{$file}", 'r'))
+    {
+        echo "Unable to open remote file: $file\n";
+        continue;
+    }
+
+    if (!$local = @fopen($localDir . $file, 'w'))
+    {
+        echo "Unable to create local file: $file\n";
+        continue;
+    }
+
+    $read = 0;
+    $filesize = filesize("ssh2.sftp://{$stream}/{$remoteDir}{$file}");
+
+
+
     while ($read < $filesize && ($buffer = fread($remote, $filesize - $read)))
     {
         $read += strlen($buffer);
@@ -101,6 +175,9 @@ foreach ($files as $file)
     fclose($local);
     fclose($remote);
 }
+}
+#}
+/*
 
 $lastMod = "";
 $lastModFile = '';
@@ -112,12 +189,12 @@ foreach (scandir($dir) as $entry) {
     }
 }
 var_dump($lastModFile);
-
+*/
 
 $outputfile=$S3sourceDir . "/paywizarddata.csv";
 
 #file_put_contents($outputfile, $lastModFile);
-copy( $localDir."/".$lastModFile,$outputfile);
+copy( $localDir."/".$latest_filename,$outputfile);
 include './BrightCove/bcs3.php';
 include './BrightCove/AZData/LoadPayWizardData.php';
 

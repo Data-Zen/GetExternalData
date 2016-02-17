@@ -51,6 +51,74 @@ $S3Region;
 
 GRANT SELECT ON TABLE public.EngagmentDashboardData TO GROUP readonly;
 
+
+drop table if exists  public.engagmentdashboarddata_rollup;
+CREATE TABLE public.engagmentdashboarddata_rollup
+(
+	id BIGINT ENCODE lzo,
+	video_id BIGINT ENCODE lzo,
+	video_title VARCHAR(10000) ENCODE lzo,
+	video_duration BIGINT ENCODE lzo,
+	video_created_at TIMESTAMP ENCODE lzo,
+	video_view BIGINT ENCODE lzo,
+	video_view_amount_second BIGINT ENCODE lzo,
+	video_peak_ccu BIGINT ENCODE lzo,
+	video_average_ccu DOUBLE PRECISION ENCODE bytedict,
+	type INTEGER ENCODE lzo,
+	bc_video_id BIGINT ENCODE lzo,
+	reference_id VARCHAR(10000) ENCODE lzo,
+	user_id BIGINT ENCODE lzo,
+	user_username VARCHAR(10000) ENCODE lzo,
+	team_id INTEGER ENCODE lzo,
+	team_name VARCHAR(10000) ENCODE lzo,
+	team_title VARCHAR(10000) ENCODE lzo,
+	league_id VARCHAR(10000) ENCODE lzo,
+	league_name VARCHAR(10000) ENCODE lzo,
+	league_title VARCHAR(10000) ENCODE lzo,
+	date TIMESTAMP ENCODE lzo,
+	created_at TIMESTAMP ENCODE lzo,
+	updated_at TIMESTAMP ENCODE lzo,
+	category_id INTEGER ENCODE lzo,
+	category_name VARCHAR(10000) ENCODE lzo,
+	category_title VARCHAR(10000) ENCODE lzo
+)
+DISTSTYLE EVEN;
+
+GRANT SELECT ON TABLE public.engagmentdashboarddata_rollup TO GROUP readonly;
+
+insert into engagmentdashboarddata_rollup
+SELECT max(id)
+       , video_id
+       , max(video_title)
+       , sum(video_duration)
+       , max(video_created_at)
+       , sum(video_view)
+       , sum(video_view_amount_second)
+       , max(video_peak_ccu)
+       , max(video_average_ccu)
+       , type
+       , max(bc_video_id)
+       , reference_id
+       , max(user_id)
+       , max(user_username)
+       , max(team_id)
+       , max(team_name)
+       , max(team_title)
+       , max(league_id)
+       , max(league_name)
+       , max(league_title)
+       , max(date) 
+       , min(created_at) 
+       , max(updated_at) 
+       , max(category_id) 
+       , max(category_name) 
+       , max(category_title) 
+ FROM public.engagmentdashboarddata 
+ group by video_id,type,reference_id
+ --order by video_id
+ --LIMIT 100;
+ ;
+
 ";
 
 

@@ -121,7 +121,7 @@ SELECT max(id)
                 , CASE 
                                 WHEN max(video_duration) > 0
                                                 THEN CASE 
-                                                                                WHEN sum(video_view_amount_second) / (max(video_duration) / 1000) < 0
+                                                                                WHEN sum(video_view_amount_second) / (max(video_duration) / 1000) < 1
                                                                                                 THEN 1
                                                                                 ELSE sum(video_view_amount_second) / (max(video_duration) / 1000)
                                                                                 END

@@ -13,14 +13,14 @@ $sql="
 UPDATE broadcaster_details
 SET username = trim(lower(replace(replace(username,'-',''),'_','')));
 
-
+*/
 UPDATE zencoder
 SET azbroadcaster=trim(lower(replace(replace(azbroadcaster,'-',''),'_','')));
 
 
 UPDATE bc_videos
 SET azbroadcaster=trim(lower(replace(replace(azbroadcaster,'-',''),'_','')));
-*/
+
 drop table if exists public.bc_videos_rollup_backup;
 CREATE TABLE public.bc_videos_rollup_backup
 (

@@ -119,7 +119,7 @@ SELECT max(id)
                 , max(category_name)
                 , max(category_title)
                 , CASE 
-                                WHEN max(video_duration) > 0
+                                WHEN max(video_duration) > 0 and type =1
                                                 THEN CASE 
                                                                                 WHEN sum(video_view_amount_second) / (max(video_duration) / 1000) < 1
                                                                                                 THEN 1

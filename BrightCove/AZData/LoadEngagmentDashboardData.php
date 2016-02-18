@@ -7,7 +7,9 @@ $connect = pg_connect($BrightCoveModifyCredentials);
 
 
 
-$sql = "drop table if exists EngagmentDashboardData;
+$sql = "
+
+drop table if exists EngagmentDashboardData;
 
 create table EngagmentDashboardData
 (
@@ -38,6 +40,7 @@ category_id INT ENCODE LZO,
 category_name VARCHAR(10000) ENCODE lzo,
 category_title VARCHAR(10000) ENCODE lzo
 );
+
 
 copy EngagmentDashboardData
 from 's3://$S3bucketNameGFLDailyDumps/analytics_video_play.csv' with 
@@ -88,7 +91,6 @@ DISTSTYLE EVEN;
 
 GRANT SELECT ON TABLE public.engagmentdashboarddata_rollup TO GROUP readonly;
 
-
 INSERT INTO engagmentdashboarddata_rollup
 SELECT max(id)
                 , video_id
@@ -116,7 +118,15 @@ SELECT max(id)
                 , max(category_id)
                 , max(category_name)
                 , max(category_title)
-                , case when max(video_duration) > 0 then sum(video_view_amount_second) / (max(video_duration) / 1000) else null end
+                , CASE 
+                                WHEN max(video_duration) > 0
+                                                THEN CASE 
+                                                                                WHEN sum(video_view_amount_second) / (max(video_duration) / 1000) < 0
+                                                                                                THEN 1
+                                                                                ELSE sum(video_view_amount_second) / (max(video_duration) / 1000)
+                                                                                END
+                                ELSE NULL
+                                END
                 , CASE 
                                 WHEN type = 1
                                                 THEN 'CH'

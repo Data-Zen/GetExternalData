@@ -41,6 +41,9 @@ credentials 'aws_access_key_id=$S3accessKey;aws_secret_access_key=$S3secretKey'
 csv
 IGNOREHEADER 1
 REGION 'us-west-2';
+
+GRANT SELECT ON TABLE user_unfollowing TO GROUP readonly;
+GRANT SELECT ON TABLE user_following TO GROUP readonly;
 	 
 alter table user_following add created_At_Weekending datetime;
 alter table user_unfollowing add created_At_Weekending datetime;
@@ -49,8 +52,7 @@ update user_following set created_At_Weekending=date_trunc('week', created_at) +
 update user_unfollowing set created_At_Weekending=date_trunc('week', created_at) + 6;
 
 
-GRANT SELECT ON TABLE user_unfollowing TO GROUP readonly;
-GRANT SELECT ON TABLE user_following TO GROUP readonly;
+
 
 ";
 

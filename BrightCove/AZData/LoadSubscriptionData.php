@@ -71,6 +71,7 @@ DISTSTYLE EVEN;
 
 
 
+GRANT SELECT ON TABLE public.subscriptions TO GROUP readonly;
 
 
 
@@ -113,7 +114,6 @@ id
 		;
 	   
 
-GRANT SELECT ON TABLE public.subscriptions TO GROUP readonly;
 
 ";
 

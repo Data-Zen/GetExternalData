@@ -80,43 +80,54 @@ CREATE TABLE public.engagmentdashboarddata_rollup
 	updated_at TIMESTAMP ENCODE lzo,
 	category_id INTEGER ENCODE lzo,
 	category_name VARCHAR(10000) ENCODE lzo,
-	category_title VARCHAR(10000) ENCODE lzo
+	category_title VARCHAR(10000) ENCODE lzo,
+	ACCCU   BIGINT ENCODE lzo,
+	Video_type VARCHAR(10000) ENCODE lzo
 )
 DISTSTYLE EVEN;
 
 GRANT SELECT ON TABLE public.engagmentdashboarddata_rollup TO GROUP readonly;
 
-insert into engagmentdashboarddata_rollup
+
+INSERT INTO engagmentdashboarddata_rollup
 SELECT max(id)
-       , video_id
-       , max(video_title)
-       , sum(video_duration)
-       , max(video_created_at)
-       , sum(video_view)
-       , sum(video_view_amount_second)
-       , max(video_peak_ccu)
-       , max(video_average_ccu)
-       , type
-       , max(bc_video_id)
-       , reference_id
-       , max(user_id)
-       , max(user_username)
-       , max(team_id)
-       , max(team_name)
-       , max(team_title)
-       , max(league_id)
-       , max(league_name)
-       , max(league_title)
-       , max(date) 
-       , min(created_at) 
-       , max(updated_at) 
-       , max(category_id) 
-       , max(category_name) 
-       , max(category_title) 
- FROM public.engagmentdashboarddata 
- group by video_id,type,reference_id
- --order by video_id
- --LIMIT 100;
+                , video_id
+                , max(video_title)
+                , max(video_duration)
+                , max(video_created_at)
+                , sum(video_view)
+                , sum(video_view_amount_second)
+                , max(video_peak_ccu)
+                , avg(video_average_ccu)
+                , type
+                , max(bc_video_id)
+                , reference_id
+                , max(user_id)
+                , max(user_username)
+                , max(team_id)
+                , max(team_name)
+                , max(team_title)
+                , max(league_id)
+                , max(league_name)
+                , max(league_title)
+                , max(DATE)
+                , min(created_at)
+                , max(updated_at)
+                , max(category_id)
+                , max(category_name)
+                , max(category_title)
+                , sum(video_view_amount_second) / (max(video_duration) / 1000)
+                , CASE 
+                                WHEN type = 1
+                                                THEN 'CH'
+                                WHEN type = 3
+                                                THEN 'SV'
+                                ELSE 'Other'
+                                END
+FROM PUBLIC.engagmentdashboarddata
+GROUP BY video_id
+                , type
+                , reference_id
  ;
 
 ";

@@ -116,7 +116,7 @@ SELECT max(id)
                 , max(category_id)
                 , max(category_name)
                 , max(category_title)
-                , sum(video_view_amount_second) / (max(video_duration) / 1000)
+                , case when max(video_duration) > 0 then sum(video_view_amount_second) / (max(video_duration) / 1000) else null end
                 , CASE 
                                 WHEN type = 1
                                                 THEN 'CH'

@@ -106,6 +106,7 @@ php ./BrightCove/AZData/LoadUserFollow_UnFollowData.php
 php ./BrightCove/AZData/LoadEngagmentDashboardData.php
 php ./BrightCove/AZData/GetPayWizardData.php
 php ./BrightCove/AZData/FinalProcessing.php
+php ./BrightCove/AZData/VacuumAllTables.php
 
 rm -rf /tmp/lock_GetExternalData
 ELAPSED_TIME_FP=$(($SECONDS - $START_TIME))

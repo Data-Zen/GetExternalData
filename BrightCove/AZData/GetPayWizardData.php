@@ -140,7 +140,7 @@ $file=$latest_filename;
 
 $copywholedirectory =0;
 
-if ($copywholedirectory =1)
+if ($copywholedirectory ==1)
 {
 foreach ($files as $file)
 {

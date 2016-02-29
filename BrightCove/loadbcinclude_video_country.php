@@ -86,10 +86,14 @@ where dt in
 (select distinct dt  from public.bc_videos_country_staging b  );
 
 
+
 /* Load the final de-duped data */
 insert into public.bc_videos_country
 select distinct * from public.bc_videos_country_staging a
 where not exists (select 1 from public.bc_videos_country b where a.dt=b.dt and a.video=b.video);
+
+delete from public.bc_videos_country
+	where video_seconds_viewed> 4000000000  --Get rid of outliers;
 
 ";
 

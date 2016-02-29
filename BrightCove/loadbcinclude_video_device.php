@@ -93,6 +93,9 @@ insert into public.bc_videos_device
 select distinct * from public.bc_videos_device_staging a
 where not exists (select 1 from public.bc_videos_device b where a.dt=b.dt and a.video=b.video);
 
+
+delete from public.bc_videos_device
+	where video_seconds_viewed> 4000000000  --Get rid of outliers;
 ";
 
 

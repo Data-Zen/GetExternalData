@@ -30,7 +30,7 @@ if [[ $(hostname -s) = *paul* ]]; then
 fi
 
 
-#daysback=90
+daysback=90
 #daysback=1   #CHANGE THIS!!!!!!!!!!!!!!!!!!!!!!!!!
 daysforward=30
 #daysback=160
@@ -107,6 +107,7 @@ php ./BrightCove/AZData/LoadEngagmentDashboardData.php
 php ./BrightCove/AZData/GetPayWizardData.php
 php ./BrightCove/AZData/FinalProcessing.php
 php ./BrightCove/AZData/VacuumAllTables.php
+php ./BrightCove/AZData/UnloadEngagmentDashboard.php
 
 rm -rf /tmp/lock_GetExternalData
 ELAPSED_TIME_FP=$(($SECONDS - $START_TIME))

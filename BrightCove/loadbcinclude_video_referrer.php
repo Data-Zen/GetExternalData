@@ -93,6 +93,10 @@ insert into public.bc_videos_referrer
 select distinct * from public.bc_videos_referrer_staging a
 where not exists (select 1 from public.bc_videos_referrer b where a.dt=b.dt and a.video=b.video);
 
+
+delete from public.bc_videos_referrer
+	where video_seconds_viewed> 4000000000  --Get rid of outliers;
+
 ";
 
 

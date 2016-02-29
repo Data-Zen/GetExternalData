@@ -170,6 +170,9 @@ select distinct * from public.bc_videos_staging a
 where not exists (select 1 from public.bc_videos b where a.video=b.video and a.dt=b.dt)
 and video_seconds_viewed > 0;
 
+delete from public.bc_videos
+	where video_seconds_viewed> 4000000000  --Get rid of outliers;
+
 ";
 
 

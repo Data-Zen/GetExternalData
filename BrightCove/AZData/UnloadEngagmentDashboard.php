@@ -5,15 +5,18 @@ date_default_timezone_set('UTC');//or change to whatever timezone you want
 include './BrightCove/credentials/BrightCoveCredentials.php';
 $connect = pg_connect($BrightCoveModifyCredentials);
 
+/*
 
-
-$sql = "
-
-unload ('
 select \'id\',\'video_id\',\'video_title\',\'video_duration\',\'video_created_at\',\'video_view\',\'video_view_amount_second\',\'video_peak_ccu\',\'video_average_ccu\'
 ,\'old_video_average_ccu\',\'type\',\'bc_video_id\',\'reference_id\',\'user_id\',\'user_username\',\'team_id\',\'team_name\',\'league_id\',\'league_name\',
 \'league_title\',\'date\',\'created_at\',\'updated_at\',\'category_id\',\'category_name\',\'category_title\'
 union 
+*/
+
+$sql = "
+
+unload ('
+
 SELECT id
                 , bc_azvideoid AS video_id
                 , bc_video_name AS video_title

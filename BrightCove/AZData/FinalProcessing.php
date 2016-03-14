@@ -165,55 +165,98 @@ WHERE zc_video_reference_id IN
        AND zc_video_reference_id IS NOT NULL);
 
  --delete from zencoder_rollup where zc_created_at >= (select max(zc_created_at)-30 from  zencoder_rollup );
-
-INSERT INTO dev.public.zencoder_rollup (zc_audio_bitrate_in_kbps , zc_audio_codec , zc_audio_sample_rate , zc_audio_tracks , zc_channels , zc_created_at , zc_duration_in_ms , zc_error_class , zc_error_message , zc_file_size_bytes , zc_finished_at , zc_format , zc_frame_rate , zc_height , zc_id , zc_md5_checksum , zc_privacy , zc_state , zc_test , zc_updated_at , zc_video_bitrate_in_kbps , zc_video_codec , zc_width , zc_total_bitrate_in_kbps , zc_outputurl , zc_azvideoid , zc_azvideotype , zc_azbroadcaster , zc_video_reference_id , zc_inputurl , zc_sourcelatitude , zc_sourcelongitude , zc_sourcelocation , zc_destinationlatitude , zc_destinationlongitude , zc_destinationlocation , zc_duration_in_minutes , zc_duration_in_hours , zc_sourcelocation_country_cd , zc_sourcelocation_country )
-SELECT max(nvl(audio_bitrate_in_kbps,0)) ,
-       max(nvl(audio_codec,'')) ,
-       max(nvl(audio_sample_rate,0)) ,
-       max(nvl(audio_tracks,'')) ,
-       max(nvl(channels,0)) ,
-       min(nvl(created_at,'2001-01-01')) ,
-       sum(nvl(duration_in_ms,0)) ,
-       max(nvl(error_class,'')) ,
-       max(nvl(error_message,'')) ,
-       max(nvl(file_size_bytes,0)) ,
-       max(nvl(finished_at,'2001-01-01')) ,
-       max(nvl(format,'')) ,
-       max(nvl(frame_rate,0)) ,
-       max(nvl(height,0)) ,
-       max(nvl(id,0)) ,
-       max(nvl(md5_checksum,'')) ,
-       max(nvl(privacy,'')) ,
-       max(nvl(STATE,'')) ,
-       max(nvl(test,'')) ,
-       max(nvl(updated_at,'2001-01-01')) ,
-       max(nvl(video_bitrate_in_kbps,0)) ,
-       max(nvl(video_codec,'')) ,
-       max(nvl(width,0)) ,
-       max(nvl(total_bitrate_in_kbps,0)) ,
-       max(nvl(outputurl,'')) ,
-       max(nvl(azvideoid,0)) ,
-       max(nvl(azvideotype,'')) ,
-       max(nvl(azbroadcaster,'')) ,
-       video_reference_id ,
-       max(nvl(inputurl,'')) ,
-       max(nvl(sourcelatitude,0)) ,
-       max(nvl(sourcelongitude,0)) ,
-       max(nvl(sourcelocation,'')) ,
-       max(nvl(destinationlatitude,0)) ,
-       max(nvl(destinationlongitude,0)) ,
-       max(nvl(destinationlocation,'')) ,
-       sum(nvl(duration_in_minutes,0)) ,
-       sum(nvl(duration_in_hours,0)) ,
-       max(nvl(sourcelocation_country_cd,'')) ,
-       max(nvl(sourcelocation_country,''))
+INSERT INTO dev.PUBLIC.zencoder_rollup (
+                zc_audio_bitrate_in_kbps
+                , zc_audio_codec
+                , zc_audio_sample_rate
+                , zc_audio_tracks
+                , zc_channels
+                , zc_created_at
+                , zc_duration_in_ms
+                , zc_error_class
+                , zc_error_message
+                , zc_file_size_bytes
+                , zc_finished_at
+                , zc_format
+                , zc_frame_rate
+                , zc_height
+                , zc_id
+                , zc_md5_checksum
+                , zc_privacy
+                , zc_state
+                , zc_test
+                , zc_updated_at
+                , zc_video_bitrate_in_kbps
+                , zc_video_codec
+                , zc_width
+                , zc_total_bitrate_in_kbps
+                , zc_outputurl
+                , zc_azvideoid
+                , zc_azvideotype
+                , zc_azbroadcaster
+                , zc_video_reference_id
+                , zc_inputurl
+                , zc_sourcelatitude
+                , zc_sourcelongitude
+                , zc_sourcelocation
+                , zc_destinationlatitude
+                , zc_destinationlongitude
+                , zc_destinationlocation
+                , zc_duration_in_minutes
+                , zc_duration_in_hours
+                , zc_sourcelocation_country_cd
+                , zc_sourcelocation_country
+                )
+SELECT max(nvl(audio_bitrate_in_kbps, 0))
+                , max(nvl(audio_codec, ''))
+                , max(nvl(audio_sample_rate, 0))
+                , max(nvl(audio_tracks, ''))
+                , max(nvl(channels, 0))
+                , min(nvl(created_at, '2001-01-01'))
+                , sum(nvl(duration_in_ms, 0))
+                , max(nvl(error_class, ''))
+                , max(nvl(error_message, ''))
+                , max(nvl(file_size_bytes, 0))
+                , max(nvl(finished_at, '2001-01-01'))
+                , max(nvl(format, ''))
+                , max(nvl(frame_rate, 0))
+                , max(nvl(height, 0))
+                , max(nvl(id, 0))
+                , max(nvl(md5_checksum, ''))
+                , max(nvl(privacy, ''))
+                , max(nvl(STATE, ''))
+                , max(nvl(test, ''))
+                , max(nvl(updated_at, '2001-01-01'))
+                , max(nvl(video_bitrate_in_kbps, 0))
+                , max(nvl(video_codec, ''))
+                , max(nvl(width, 0))
+                , max(nvl(total_bitrate_in_kbps, 0))
+                , max(nvl(outputurl, ''))
+                , max(nvl(azvideoid, 0))
+                , max(nvl(azvideotype, ''))
+                , max(nvl(azbroadcaster, ''))
+                , video_reference_id
+                , max(nvl(inputurl, ''))
+                , max(nvl(sourcelatitude, 0))
+                , max(nvl(sourcelongitude, 0))
+                , max(nvl(sourcelocation, ''))
+                , max(nvl(destinationlatitude, 0))
+                , max(nvl(destinationlongitude, 0))
+                , max(nvl(destinationlocation, ''))
+                , sum(nvl(duration_in_minutes, 0))
+                , sum(nvl(duration_in_hours, 0))
+                , max(nvl(sourcelocation_country_cd, ''))
+                , max(nvl(sourcelocation_country, ''))
 FROM zencoder zb
-WHERE NOT EXISTS
-    (SELECT 1
-     FROM zencoder_rollup zr
-     WHERE zb.video_reference_id=zr.zc_video_reference_id)
-  AND video_reference_id IS NOT NULL
-  AND nvl(duration_in_hours,0) <=30  --Prevent Erronous Data
+WHERE NOT EXISTS (
+                                SELECT 1
+                                FROM zencoder_rollup zr
+                                WHERE zb.video_reference_id = zr.zc_video_reference_id
+                                )
+                AND video_reference_id IS NOT NULL
+                AND nvl(duration_in_hours, 0) <= 30 --Prevent Erronous Data
+                AND finished_at IS NOT NULL
+        and state  not in ('processing','pending')
 GROUP BY video_reference_id;
 
 

@@ -78,7 +78,8 @@ json  'auto'
 $S3Region;
 
 /* Get rid of bad data */
-delete from bc_videos_staging where video is null and video_view is null and video_name is null and video_reference_id is null;
+--delete from bc_videos_staging where video is null and video_view is null and video_name is null and video_reference_id is null;
+delete from bc_videos_staging where video is null;
 
 /* Update Date */
 update bc_videos_staging set dt = '$fromdate';
@@ -90,10 +91,10 @@ where bc_videos_tags.video=bc_videos_staging.video
 and bc_videos_staging.videotags is null;
 
 
-/* Update the Mobile Data */
+/* Update the Mobile Data 
 update bc_videos_staging set video = -1, video_name = 'Mobile'
 where video is null and video_view is not null and video_name is null and video_seconds_viewed is not null;
-
+*/
 
 /*    */
 
@@ -168,7 +169,8 @@ where dt in
 insert into public.bc_videos
 select distinct * from public.bc_videos_staging a
 where not exists (select 1 from public.bc_videos b where a.video=b.video and a.dt=b.dt)
-and video_seconds_viewed > 0;
+;
+--and video_seconds_viewed > 0;
 
 delete from public.bc_videos
 	where video_seconds_viewed> 4000000000  --Get rid of outliers;

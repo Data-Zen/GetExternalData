@@ -17,6 +17,7 @@ $sql = "
 
 unload ('
 
+with NewEngagmentDashboard as (
 SELECT id
                 , bc_azvideoid AS video_id
                 , bc_video_name AS video_title
@@ -59,12 +60,52 @@ SELECT id
                 , category_title --Directly from engagmentdashboarddata_rollup because we havent parsed videotags yet
 FROM bc_videos_rollup
 LEFT JOIN zencoder_rollup
-                ON bc_azvideoid = zc_azvideoid 
+                ON bc_azvideoid = zc_azvideoid
 LEFT JOIN users_rollup
                 ON b_username = bc_azbroadcaster
 LEFT JOIN engagmentdashboarddata_rollup
                 ON reference_id = bc_video_reference_id
 WHERE zc_duration_in_minutes >= 10
+)
+SELECT id
+       , video_id
+       , video_title
+       , video_duration
+       , video_created_at
+       , video_view
+       , video_view_amount_second
+       , case when nvl(video_peak_ccu,0) < video_average_ccu then (video_average_ccu*1.25)::int end video_peak_ccu
+       , video_average_ccu
+       , old_video_average_ccu
+       , type
+       , bc_video_id
+       , reference_id
+       , user_id
+       , user_username
+       , team_id
+       , team_name
+       , league_id
+       , league_name
+       , league_title
+       , date
+       , created_at
+       , updated_at
+       , category_id
+       , category_name
+       , category_title
+ FROM NewEngagmentDashboard
+
+
+
+
+
+
+
+
+
+
+
+
 ')
 
 to 's3://$S3bucketNameExtractFolder/new_engagment_dashboard'

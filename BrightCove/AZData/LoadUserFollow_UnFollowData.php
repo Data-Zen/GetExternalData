@@ -14,7 +14,8 @@ create table user_following
 id	BIGINT ENCODE lzo,
 user_id	BIGINT ENCODE lzo,
 follow_id	BIGINT ENCODE lzo,
-created_at	datetime ENCODE lzo
+created_at	datetime ENCODE lzo,
+send_notification   int encode lzo
 );
 
 copy user_following

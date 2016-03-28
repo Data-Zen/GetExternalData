@@ -6,6 +6,7 @@ $json = '{"foo-bar": 12345}';
 $obj = json_decode($json);
 print $obj->{'foo-bar'}; // 12345
 */
+$daysback = 20;
 $debug = 1;
 date_default_timezone_set('UTC');//or change to whatever timezone you want
 function coall($x) {
@@ -79,30 +80,30 @@ SORTKEY ( created_at )
 ";
 if ($debug==1)
 {
-echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
+    echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
 }
 $rec = pg_query($connect,$sql);
 
 
 
 if (isset($page)) {
- }
-else
-{   $page=1;
 }
+else
+    {   $page=1;
+    }
 
 
 
-$sql="select min(created_at) from (
-select isnull(min(created_at),'2010-01-01') created_at from zencoder where state ='processing'
-union 
-select dateadd(h,-3,max(created_at)) created_at from zencoder)
+    $sql="select min(created_at) from (
+        select isnull(min(created_at),'2010-01-01') created_at from zencoder where state ='processing'
+        union 
+        select dateadd(h,-3,max(created_at)) created_at from zencoder)
 ";
 echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
 $result_maxdate = pg_query($connect, $sql);
-   while ($row = pg_fetch_array($result_maxdate)) {
-     $maxDTinFinalTable= $row[0];
-   }
+while ($row = pg_fetch_array($result_maxdate)) {
+ $maxDTinFinalTable= $row[0];
+}
 /* Set this just to get in the loop first time */
 $MinDTinStage='2020-01-01';
 $i=0;
@@ -116,32 +117,33 @@ while ($MinDTinStage >= $maxDTinFinalTable and $i < 500000 /*To ensure no infini
 {
 
 
-include 'GetZenCoderInclude.php';
+    include 'GetZenCoderInclude.php';
 
 
-$sql=" select isnull(min(created_at),'2020-01-01') from public.zencoder_staging";
-$result_mindate = pg_query($connect, $sql);
-   while ($row = pg_fetch_array($result_mindate)) {
+    $sql=" select isnull(min(created_at),'2020-01-01')+7 from public.zencoder_staging";
+    echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
+    $result_mindate = pg_query($connect, $sql);
+    while ($row = pg_fetch_array($result_mindate)) {
      $MinDTinStage= $row[0];
-   }
-if ($debug==1)
-{
+ }
+ if ($debug==1)
+ {
     echo "MinDTinStage: " . $MinDTinStage . "\n";    
 }
 if ($rowsaffected > 0 ){
-/* INSERT WAS GOOD */
-$page=$page+1;
-sleep(5);
-$errorcount =0;
+    /* INSERT WAS GOOD */
+    $page=$page+1;
+    sleep(1);
+    $errorcount =0;
 }
 else
 {
-/* INSERT WAS BAD */
-$errorcount =$errorcount+1;
-$waittime=$errorcount*60;
-echo "Problem with page: $page \n Waiting $waittime seconds. $errorcount Errors so far \n";
-sleep($waittime);
-if ($errorcount > 10) {  echo "\n\nQuiting. Too Many Errors\n\n";}
+    /* INSERT WAS BAD */
+    $errorcount =$errorcount+1;
+    $waittime=$errorcount*60;
+    echo "Problem with page: $page \n Waiting $waittime seconds. $errorcount Errors so far \n";
+    sleep($waittime);
+    if ($errorcount > 10) {  echo "\n\nQuiting. Too Many Errors\n\n";}
 
 }
 $i=$i+1;
@@ -165,9 +167,9 @@ select a.*,nvl(c.name_en,sourcelocation_country_cd) From (
     ,duration_in_ms / 1000 / 60 duration_in_minutes
     ,duration_in_ms::float / 1000 / 60 /60 duration_in_hours
     ,case when split_part(sourcelocation,',',3) = '' then sourcelocation else split_part(sourcelocation,',',3) end sourcelocation_country_cd
-FROM public.zencoder_staging b 
-where not exists (select 1 from public.zencoder where public.zencoder.id=b.id)
-) a 
+    FROM public.zencoder_staging b 
+    where not exists (select 1 from public.zencoder where public.zencoder.id=b.id)
+    ) a 
 left join countries c on trim(lower(sourcelocation_country_cd))=trim(lower(c.code)) ;
 
 
@@ -178,8 +180,8 @@ left join countries c on trim(lower(sourcelocation_country_cd))=trim(lower(c.cod
 delete from zencoder
 using 
 (
-select id,max(created_at) created_at,max(finished_at) finished_at, max(duration_in_ms) duration_in_ms, max(updated_at) updated_at from zencoder where id in (
-select id from zencoder group by 1 having count(1) > 1)
+    select id,max(created_at) created_at,max(finished_at) finished_at, max(duration_in_ms) duration_in_ms, max(updated_at) updated_at from zencoder where id in (
+        select id from zencoder group by 1 having count(1) > 1)
 group by 1) b
 where b.id=zencoder.id and b.created_at<>zencoder.created_at and b.finished_at <> zencoder.finished_at and b.updated_at <> zencoder.updated_at;
 select count(1),(select min(created_at ) from zencoder z) from zencoder;
@@ -197,4 +199,4 @@ $rec = pg_query($connect,$sql);
   $results[] = $tuple;
 */
 
-?>
+  ?>

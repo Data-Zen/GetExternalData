@@ -1,5 +1,7 @@
 <?php
 
+echo "\nStart Timer \n";
+$start = microtime(true); 
 
 date_default_timezone_set('UTC');//or change to whatever timezone you want
 
@@ -57,6 +59,7 @@ foreach($array as $tablename) //loop over values
 
        echo "\n\n****************************************************Completed Backup of ".$tablename."**************************************************** \n\n";
 }
-
+$end = round((microtime(true) - $start),2);
+echo "\nelapsed time: $end seconds \n";
 
 ?>

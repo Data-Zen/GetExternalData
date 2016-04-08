@@ -1,4 +1,5 @@
 <?php
+
 date_default_timezone_set('UTC');//or change to whatever timezone you want
 
 
@@ -82,6 +83,8 @@ exit("Was in the future already so exited procedure");
 $limit="100000000";
 echo "Limit:" . $limit . "\n";
 
+echo "\nStart Timer \n";
+$start = microtime(true); 
 
 include './BrightCove/getBCinclude_video.php';
 include './BrightCove/getBCinclude_account.php';
@@ -126,8 +129,8 @@ include './BrightCove/loadbcinclude_video_device.php';
 include './BrightCove/loadbcinclude_video_destination.php';
 include './BrightCove/loadbcinclude_video_referrer.php';
 #include './BrightCove/loadbcinclude_video_source.php';
-
-
+$end = round((microtime(true) - $start),2);
+echo "\nelapsed time: $end seconds \n";
 if ($rowsaffected=0 ){
 exit (999);
 }

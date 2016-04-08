@@ -1,4 +1,8 @@
 <?php
+echo "\nStart Timer \n";
+$start = microtime(true); 
+
+
 date_default_timezone_set('UTC');//or change to whatever timezone you want
 
 include './BrightCove/credentials/BrightCoveCredentials.php';
@@ -113,10 +117,24 @@ $cleanresult = str_replace("]",'"',$cleanresult);
 file_put_contents($file, $cleanresult);
 //exec('php getBC.php "19 october 2015 "20 october 2015" 10 >/dev/null');
 //exec ('whoami');
+$end = round((microtime(true) - $start),2);
+echo "\nelapsed time: $end seconds \n";
+
+
+
+echo "\nStart Timer \n";
+$start = microtime(true); 
 
   include './BrightCove/bcs3.php';
+$end = round((microtime(true) - $start),2);
+echo "\nelapsed time: $end seconds \n";
+echo "\nStart Timer \n";
+$start = microtime(true); 
+
   include './BrightCove/loadbcinclude_tags.php';
   #php ./BrightCove/AZData/LoadBroadcasterData.php 
+$end = round((microtime(true) - $start),2);
+echo "\nelapsed time: $end seconds \n";
   
 
 

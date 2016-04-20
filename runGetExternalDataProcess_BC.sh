@@ -30,8 +30,8 @@ if [[ $(hostname -s) = *paul* ]]; then
 fi
 
 
-daysback=90
-#daysback=14   #CHANGE THIS!!!!!!!!!!!!!!!!!!!!!!!!!
+#daysback=90
+daysback=1   #CHANGE THIS!!!!!!!!!!!!!!!!!!!!!!!!!
 daysforward=30
 #daysback=160
 let sleepv=1

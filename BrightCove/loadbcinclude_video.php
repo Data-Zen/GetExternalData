@@ -79,7 +79,7 @@ $S3Region;
 
 /* Get rid of bad data */
 --delete from bc_videos_staging where video is null and video_view is null and video_name is null and video_reference_id is null;
-delete from bc_videos_staging where video is null;
+--delete from bc_videos_staging where video is null;
 
 /* Update Date */
 update bc_videos_staging set dt = '$fromdate';

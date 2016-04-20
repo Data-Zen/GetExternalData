@@ -49,7 +49,10 @@ CREATE TABLE if not exists public.bc_videos_device  (
 	video_duration      	float8 NULL ENCODE bytedict,
 	device_os 		varchar(10000) NULL ENCODE LZO,	
 	device_type 		varchar(10000) NULL ENCODE LZO,	
-	dt                  	date NULL ENCODE LZO sortkey  distkey
+	dt                  	date NULL ENCODE LZO sortkey  distkey,
+	azvideoid           	int8 NULL ENCODE LZO,
+	azvideotype         	varchar(100) NULL ENCODE LZO,
+	azbroadcaster       	varchar(10000) NULL ENCODE LZO 	
 	)
 DISTSTYLE KEY;
 
@@ -63,7 +66,10 @@ CREATE TABLE public.bc_videos_device_staging  (
 	video_duration      	float8 NULL ENCODE bytedict,
 	device_os 		varchar(10000) NULL ENCODE LZO,	
 	device_type 		varchar(10000) NULL ENCODE LZO,	
-	dt                  	date NULL ENCODE LZO sortkey  distkey
+	dt                  	date NULL ENCODE LZO sortkey  distkey,
+	azvideoid           	int8 NULL ENCODE LZO,
+	azvideotype         	varchar(100) NULL ENCODE LZO,
+	azbroadcaster       	varchar(10000) NULL ENCODE LZO 	
 	)
 DISTSTYLE KEY;
 
@@ -74,10 +80,67 @@ json  'auto'
 $S3Region;
 
 /* Get rid of bad data */
-delete from bc_videos_device_staging where video is null;
+--delete from bc_videos_device_staging where video is null;
 
 /* Update Date */
 update bc_videos_device_staging set dt = '$fromdate';
+
+
+
+
+update bc_videos_device_staging
+set azvideoid=
+CASE
+WHEN charindex('VOD',substring(video_reference_id,6)) >0  
+        and ( charindex('VOD',substring(video_reference_id,6))  < case when charindex('CH',substring(video_reference_id,6)) = 0 then 100000 else charindex('CH',substring(video_reference_id,6)) end ) 
+        and ( charindex('VOD',substring(video_reference_id,6))  < case when charindex('SV',substring(video_reference_id,6)) = 0 then 100000 else charindex('SV',substring(video_reference_id,6)) end ) 
+THEN substring(substring(video_reference_id,6),1,charindex('VOD',substring(video_reference_id,6))-1  )::bigint
+
+WHEN charindex('CH',substring(video_reference_id,6)) >0 
+    and (charindex('CH',substring(video_reference_id,6)) < case when charindex('SV',substring(video_reference_id,6)) = 0 then 100000 else charindex('SV',substring(video_reference_id,6)) end ) 
+THEN substring(substring(video_reference_id,6),1,charindex('CH',substring(video_reference_id,6))-1  )::bigint
+
+WHEN charindex('SV',substring(video_reference_id,6)) >0 
+THEN substring(substring(video_reference_id,6),1,charindex('SV',substring(video_reference_id,6))-1  )::bigint
+
+ELSE
+NULL
+END-- azvideoid
+,azbroadcaster=CASE
+WHEN charindex('VOD',substring(video_reference_id,6)) >0  
+        and ( charindex('VOD',substring(video_reference_id,6))  < case when charindex('CH',substring(video_reference_id,6)) = 0 then 100000 else charindex('CH',substring(video_reference_id,6)) end ) 
+        and ( charindex('VOD',substring(video_reference_id,6))  < case when charindex('SV',substring(video_reference_id,6)) = 0 then 100000 else charindex('SV',substring(video_reference_id,6)) end ) 
+THEN substring(substring(video_reference_id,6),charindex('VOD',substring(video_reference_id,6))+3  )
+
+
+WHEN charindex('CH',substring(video_reference_id,6)) >0 
+    and (charindex('CH',substring(video_reference_id,6)) < case when charindex('SV',substring(video_reference_id,6)) = 0 then 100000 else charindex('SV',substring(video_reference_id,6)) end ) 
+THEN substring(substring(video_reference_id,6),charindex('CH',substring(video_reference_id,6))+2  )
+
+WHEN charindex('SV',substring(video_reference_id,6)) >0 
+THEN substring(substring(video_reference_id,6),charindex('SV',substring(video_reference_id,6))+2  )
+
+ELSE
+NULL
+END -- azbroadcaster 
+,azvideotype=
+CASE
+WHEN charindex('VOD',substring(video_reference_id,6)) >0  
+        and ( charindex('VOD',substring(video_reference_id,6))  < case when charindex('CH',substring(video_reference_id,6)) = 0 then 100000 else charindex('CH',substring(video_reference_id,6)) end ) 
+        and ( charindex('VOD',substring(video_reference_id,6))  < case when charindex('SV',substring(video_reference_id,6)) = 0 then 100000 else charindex('SV',substring(video_reference_id,6)) end ) 
+THEN  'VOD'
+
+WHEN charindex('CH',substring(video_reference_id,6)) >0 
+    and (charindex('CH',substring(video_reference_id,6)) < case when charindex('SV',substring(video_reference_id,6)) = 0 then 100000 else charindex('SV',substring(video_reference_id,6)) end ) 
+THEN  'CH'
+
+WHEN charindex('SV',substring(video_reference_id,6)) >0 
+THEN 'SV'
+
+ELSE
+NULL
+END 
+where azvideoid is null;
 
 
 

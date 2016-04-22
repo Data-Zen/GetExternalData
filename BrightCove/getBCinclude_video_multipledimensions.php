@@ -2,12 +2,13 @@
 
 
 $array = [
-
+/* Filename,Dimensions,Fields*/
     ["video_device", "video,device_os,device_type","video_view,video.name,video_seconds_viewed,video.reference_id,video_duration,device_os,device_type"],
     ["video_country", "video,country","video_view,video.name,video_seconds_viewed,video.reference_id,video_duration,country,country_name"],
     ["video_referrer", "video,referrer_domain,source_type","video_view,video.name,video_seconds_viewed,video.reference_id,video_duration,referrer_domain,source_type"],
     #["video_source", "video,source_type,search_terms","video_view"],
-    ["video_destination", "video,destination_domain","video_view,video.name,video_seconds_viewed,video.reference_id,video_duration,destination_domain"]
+    ["video_destination", "video,destination_domain","video_view,video.name,video_seconds_viewed,video.reference_id,video_duration,destination_domain"],
+    ["destination_domain_path","destination_domain,destination_path", "video_impression,video_seconds_viewed,video_view,destination_domain,destination_path"]
 ];
 
 foreach ($array as list($afilename, $adimension,$afields)) {

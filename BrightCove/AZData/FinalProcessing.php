@@ -70,7 +70,7 @@ WHERE bc_video_reference_id IN (
     SELECT DISTINCT bc_video_reference_id
     FROM bc_videos_rollup
     WHERE bc_dt >= (
-        SELECT max(bc_dt) - 90
+        SELECT max(bc_dt) - 500
         FROM bc_videos_rollup
         )
       AND bc_video_reference_id IS NOT NULL
@@ -141,7 +141,7 @@ DELETE
 FROM bc_videos_rollup
 WHERE bc_video_reference_id IS NULL
   AND bc_dt >= (
-    SELECT max(bc_dt) - 90
+    SELECT max(bc_dt) - 500
     FROM bc_videos_rollup
     );
 

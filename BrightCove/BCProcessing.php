@@ -128,6 +128,8 @@ include './BrightCove/loadbcinclude_video_country.php';
 include './BrightCove/loadbcinclude_video_device.php';
 include './BrightCove/loadbcinclude_video_destination.php';
 include './BrightCove/loadbcinclude_video_referrer.php';
+include './BrightCove/loadbcinclude_destination_domain_path.php';
+
 #include './BrightCove/loadbcinclude_video_source.php';
 $end = round((microtime(true) - $start),2);
 echo "\nelapsed time: $end seconds \n";

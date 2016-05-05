@@ -31,8 +31,13 @@ fi
 
 
 daysback=90
-#daysback=1   #CHANGE THIS!!!!!!!!!!!!!!!!!!!!!!!!!
+ZCdaysback=7
 daysforward=30
+
+#daysback=3                       #REMOVE THIS!!!!!!
+#ZCdaysback=1                      #REMOVE THIS!!!!!!
+
+
 #daysback=160
 let sleepv=1
 if [ "$backfill" -eq 1 ] ; then
@@ -92,7 +97,7 @@ echo "ELAPSED_TIME in SECONDS for BC:" $ELAPSED_TIME
 START_TIME=$SECONDS
 if [ "$ZC" -eq 1 ]; then
 
-	php ./ZenCoder/GetZenCoderLoop.php
+	php ./ZenCoder/GetZenCoderLoop.php  $ZCdaysback
 fi
 #date
 ELAPSED_TIME_ZC=$(($SECONDS - $START_TIME))

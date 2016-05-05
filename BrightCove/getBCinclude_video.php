@@ -9,7 +9,8 @@
 //$fields = $argv[5];
 //if ($fields == "")
 //{
-	$fields="account.name,bytes_delivered,engagement_score,play_rate,video,video_duration,video_engagement_1,video_engagement_100,video_engagement_25,video_engagement_50,video_engagement_75,video_impression,video_name,video_percent_viewed,video_seconds_viewed,video_view,video.reference_id,video.name&";
+	#$fields="account.name,bytes_delivered,engagement_score,play_rate,video,video_duration,video_engagement_1,video_engagement_100,video_engagement_25,video_engagement_50,video_engagement_75,video_impression,video_name,video_percent_viewed,video_seconds_viewed,video_view,video.reference_id,video.name&";
+	$fields="bytes_delivered,engagement_score,play_rate,video,video_duration,video_engagement_1,video_engagement_100,video_engagement_25,video_engagement_50,video_engagement_75,video_impression,video_name,video_percent_viewed,video_seconds_viewed,video_view,video.reference_id,video.name&";
 //}
 
 	echo  "Dimensions: " . $dimensions. "\n";

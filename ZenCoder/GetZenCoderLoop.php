@@ -6,7 +6,14 @@ $json = '{"foo-bar": 12345}';
 $obj = json_decode($json);
 print $obj->{'foo-bar'}; // 12345
 */
-$daysback = 20;
+
+
+if (!empty( $argv[1])) 
+{ $daysback = $argv[1];}
+else
+{ $daysback=7;}
+
+
 $debug = 1;
 date_default_timezone_set('UTC');//or change to whatever timezone you want
 function coall($x) {
@@ -120,7 +127,7 @@ while ($MinDTinStage >= $maxDTinFinalTable and $i < 500000 /*To ensure no infini
     include 'GetZenCoderInclude.php';
 
 
-    $sql=" select isnull(min(created_at),'2020-01-01')+7 from public.zencoder_staging";
+    $sql=" select isnull(min(created_at),'2020-01-01')+".$daysback." from public.zencoder_staging";
     echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
     $result_mindate = pg_query($connect, $sql);
     while ($row = pg_fetch_array($result_mindate)) {

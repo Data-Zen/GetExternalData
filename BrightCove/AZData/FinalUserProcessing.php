@@ -13,6 +13,7 @@ $sql="
 
 
 DROP TABLE IF EXISTS PUBLIC.users_rollup;
+/*
                 CREATE TABLE PUBLIC.users_rollup (
                                 b_id_user BIGINT ENCODE lzo
                                 , b_username VARCHAR(10000) ENCODE lzo DISTKEY
@@ -38,7 +39,31 @@ DROP TABLE IF EXISTS PUBLIC.users_rollup;
                                 ) SORTKEY (b_username);
 
 
+*/
 
+SELECT id_user b_id_user
+       , username b_username 
+       , email b_email
+       , user_status b_user_status
+       , channel_status b_channel_status
+       , role b_role
+       , package b_package
+       , package_abbrev b_package_abbrev
+       , lower(team) b_team
+       , league_name b_organization
+       , user_date_created b_user_date_created
+       , channel_date_created b_channel_date_created
+       , followers_count b_followers_count
+       , unfollowers_count b_unfollowers_count
+       , channel_name b_channel_name
+       , last_broadcasted_date b_last_broadcasted_date
+       , channel_frozen_date b_channel_frozen_date
+       , analytics_ignore b_analytics_ignore
+        ,9999 b_rank
+        ,case when nvl(team,'') = '' then lower(username) || '-NoTeam' else team end b_azubuteam
+        into users_rollup
+ FROM dev.public.users 
+ ;
 GRANT ALL
                 ON TABLE PUBLIC.users_rollup
                 TO
@@ -48,10 +73,34 @@ GRANT SELECT
                 ON TABLE PUBLIC.users_rollup
                 TO
 GROUP readonly;
-
+/*
 
 
 INSERT INTO dev.PUBLIC.users_rollup
+select max(id_user) id_user
+    ,a.username
+    ,max(email) email
+    ,max(user_status) user_status
+    ,max(channel_status) channel_status
+    ,max(ROLE) ROLE
+    ,max(package) package
+    ,max(package_abbrev) package_abbrev
+    ,max(lower(team)) team
+    ,max(league_name) organization
+    ,max(user_date_created) user_date_created
+    ,max(channel_date_created) channel_date_created
+    ,max(followers_count) followers_count
+    ,max(unfollowers_count) unfollowers_count
+    ,max(channel_name) channel_name
+    ,max(last_broadcasted_date) last_broadcasted_date
+    ,max(channel_frozen_date) channel_frozen_date
+    ,max(analytics_ignore) analytics_ignore
+    ,NULL
+    ,max(lower(team)) azubuteam
+FROM users a
+GROUP BY a.username;
+*/
+/*
 SELECT max(id_user) id_user
                 , a.username
                 , max(email) email
@@ -87,7 +136,7 @@ FROM users a
 LEFT JOIN broadcaster_details_azubuteams b
                 ON a.username = b.username --where not exists (Select 1 from users_rollup br where br.b_username=b.username)
 GROUP BY a.username;
-
+*/
 
 
 ALTER TABLE users_rollup ADD b_team_rank INT encode lzo;

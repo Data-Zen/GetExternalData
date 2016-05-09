@@ -34,7 +34,7 @@ daysback=90
 ZCdaysback=7
 daysforward=30
 
-#daysback=3                       #REMOVE THIS!!!!!!
+#daysback=2                       #REMOVE THIS!!!!!!
 #ZCdaysback=1                      #REMOVE THIS!!!!!!
 
 

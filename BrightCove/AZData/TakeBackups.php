@@ -16,7 +16,47 @@ foreach($array as $tablename) //loop over values
        echo "\n\n****************************************************Backuping up ".$tablename."****************************************************\n\n"; 
 
 
-       $sql = "drop table if exists ".$tablename."_backup_7;";
+       $sql = "drop table if exists ".$tablename."_backup_15;";
+       echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
+       $rec = pg_query($connect,$sql);
+
+
+       $sql = "ALTER TABLE ".$tablename."_backup_14 RENAME TO ".$tablename."_backup_15;";
+       echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
+       $rec = pg_query($connect,$sql);
+
+
+       $sql = "ALTER TABLE ".$tablename."_backup_13 RENAME TO ".$tablename."_backup_14;";
+       echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
+       $rec = pg_query($connect,$sql);
+
+
+       $sql = "ALTER TABLE ".$tablename."_backup_12 RENAME TO ".$tablename."_backup_13;";
+       echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
+       $rec = pg_query($connect,$sql);
+
+
+       $sql = "ALTER TABLE ".$tablename."_backup_11 RENAME TO ".$tablename."_backup_12;";
+       echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
+       $rec = pg_query($connect,$sql);
+
+
+       $sql = "ALTER TABLE ".$tablename."_backup_10 RENAME TO ".$tablename."_backup_11;";
+       echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
+       $rec = pg_query($connect,$sql);
+
+
+       $sql = "ALTER TABLE ".$tablename."_backup_9 RENAME TO ".$tablename."_backup_10;";
+       echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
+       $rec = pg_query($connect,$sql);
+
+
+       $sql = "ALTER TABLE ".$tablename."_backup_8 RENAME TO ".$tablename."_backup_9;";
+       echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
+       $rec = pg_query($connect,$sql);
+
+
+       $sql = "ALTER TABLE ".$tablename."_backup_7 RENAME TO ".$tablename."_backup_8;";
        echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
        $rec = pg_query($connect,$sql);
 

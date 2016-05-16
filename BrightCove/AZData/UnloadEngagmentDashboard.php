@@ -75,7 +75,7 @@ SELECT id
        , video_view
        , video_view_amount_second
        , case when nvl(video_peak_ccu,0) < video_average_ccu then (video_average_ccu*1.25)::int else video_peak_ccu end video_peak_ccu
-       , case when created_at >= \'5/1/2016\' then video_average_ccu else old_video_average_ccu end video_average_ccu
+       , case when created_at >= \'5/10/2016\' then video_average_ccu else old_video_average_ccu end video_average_ccu
        , old_video_average_ccu
        , type
        , bc_video_id

@@ -121,7 +121,7 @@ foreach ($results as $chunk) {
         if (strpos($outputurl,"CH") >0  )
         {    
             //Use to get video / broadcaster / broadcasttype
-            $AZURL=substr($outputurl, strpos($outputurl,"video")+strlen("video"));
+            $AZURL=substr($outputurl, strpos($outputurl,"/video")+strlen("/video"));
             if (strpos($AZURL,"_") >0  ) {$AZURL=substr($AZURL, 0,strpos($AZURL,"_"));}
             if (strpos($AZURL,"/") >0  ) {$AZURL=substr($AZURL, 0,strpos($AZURL,"/"));}
             if (strpos($AZURL,".") >0  ) {$AZURL=substr($AZURL, 0,strpos($AZURL,"."));}

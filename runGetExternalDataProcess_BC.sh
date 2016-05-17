@@ -30,7 +30,7 @@ if [[ $(hostname -s) = *paul* ]]; then
 fi
 
 
-daysback=90
+daysback=60
 ZCdaysback=7
 daysforward=30
 

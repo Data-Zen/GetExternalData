@@ -150,7 +150,9 @@ else
     $waittime=$errorcount*60;
     echo "Problem with page: $page \n Waiting $waittime seconds. $errorcount Errors so far \n";
     sleep($waittime);
-    if ($errorcount > 10) {  echo "\n\nQuiting. Too Many Errors\n\n";}
+    if ($errorcount > 10) {  echo "\n\nQuiting. Too Many Errors\n\n";
+    $i=500000;
+    }
 
 }
 $i=$i+1;

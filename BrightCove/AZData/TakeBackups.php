@@ -16,11 +16,11 @@ foreach($array as $tablename) //loop over values
        echo "\n\n****************************************************Backuping up ".$tablename."****************************************************\n\n"; 
 
 
-       $sql = "drop table if exists ".$tablename."_backup_15;";
+       $sql = "drop table if exists ".$tablename."_backup_7;";
        echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
        $rec = pg_query($connect,$sql);
 
-
+/*
        $sql = "ALTER TABLE ".$tablename."_backup_14 RENAME TO ".$tablename."_backup_15;";
        echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
        $rec = pg_query($connect,$sql);
@@ -59,7 +59,7 @@ foreach($array as $tablename) //loop over values
        $sql = "ALTER TABLE ".$tablename."_backup_7 RENAME TO ".$tablename."_backup_8;";
        echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
        $rec = pg_query($connect,$sql);
-
+*/
 
        $sql = "ALTER TABLE ".$tablename."_backup_6 RENAME TO ".$tablename."_backup_7;";
        echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";

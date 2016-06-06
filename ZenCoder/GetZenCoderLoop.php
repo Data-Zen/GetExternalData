@@ -101,7 +101,7 @@ else
 
 
 
-    $sql="select min(created_at) from (
+    $sql="select min(created_at)::date from (
         select isnull(min(created_at),'2010-01-01') created_at from zencoder where state ='processing'
         union 
         select dateadd(h,-3,max(created_at)) created_at from zencoder)
@@ -120,14 +120,14 @@ if ($debug==1)
     echo "maxDTinFinalTable: " . $maxDTinFinalTable . "\n";    
 }
 
-while ($MinDTinStage >= $maxDTinFinalTable and $i < 500000 /*To ensure no infinite loop*/)
+while ($MinDTinStage >= $maxDTinFinalTable and $i < 500 /*To ensure no infinite loop*/)
 {
 
 
     include 'GetZenCoderInclude.php';
 
 
-    $sql=" select isnull(min(created_at),'2020-01-01')+".$daysback." from public.zencoder_staging";
+    $sql=" select isnull(min(created_at),'2020-01-01')+".$daysback."::date from public.zencoder_staging";
     echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
     $result_mindate = pg_query($connect, $sql);
     while ($row = pg_fetch_array($result_mindate)) {

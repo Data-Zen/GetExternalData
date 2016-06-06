@@ -11,8 +11,9 @@ $array = [
     ["destination_domain_path","destination_domain,destination_path", "video_impression,video_seconds_viewed,video_view,destination_domain,destination_path"]
 ];
 
-foreach ($array as list($afilename, $adimension,$afields)) {
 
+foreach ($array as list($afilename, $adimension,$afields)) {
+$start1 = microtime(true); 
 
 //$dimensions = $argv[4];
 //if ($dimensions == "")
@@ -154,6 +155,9 @@ $file="files/bcoutput_".$afilename . ".json";
 
 file_put_contents($file, $cleanresult);
 
+
+$end1 = round((microtime(true) - $start1),2);
+echo "\nelapsed time: $end1 seconds \n";
 }
 
 

@@ -31,11 +31,11 @@ fi
 
 
 daysback=60
-ZCdaysback=7
+ZCdaysback=2
 daysforward=30
 
-#daysback=1                       #REMOVE THIS!!!!!!
-#ZCdaysback=90                      #REMOVE THIS!!!!!!
+#daysback=60                       #REMOVE THIS!!!!!!
+#ZCdaysback=30                      #REMOVE THIS!!!!!!
 
 
 #daysback=160

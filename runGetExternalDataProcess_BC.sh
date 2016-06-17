@@ -30,12 +30,12 @@ if [[ $(hostname -s) = *paul* ]]; then
 fi
 
 
-daysback=60
-ZCdaysback=2
+daysback=30
+ZCdaysback=3
 daysforward=30
 
-#daysback=60                       #REMOVE THIS!!!!!!
-#ZCdaysback=30                      #REMOVE THIS!!!!!!
+#daysback=1                       #REMOVE THIS!!!!!!
+#ZCdaysback=1                      #REMOVE THIS!!!!!!
 
 
 #daysback=160

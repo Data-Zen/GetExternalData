@@ -127,7 +127,7 @@ while ($MinDTinStage >= $maxDTinFinalTable and $i < 500 /*To ensure no infinite 
     include 'GetZenCoderInclude.php';
 
 
-    $sql=" select isnull(min(created_at),'2020-01-01')+".$daysback."::date from public.zencoder_staging";
+    $sql=" select isnull(min(created_at)::date,'2020-01-01')+".$daysback." from public.zencoder_staging";
     echo "\n*******StartQuery\n".$sql."\n*******EndQuery\n";
     $result_mindate = pg_query($connect, $sql);
     while ($row = pg_fetch_array($result_mindate)) {

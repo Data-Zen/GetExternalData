@@ -60,7 +60,7 @@ SELECT id_user b_id_user
        , channel_frozen_date b_channel_frozen_date
        , analytics_ignore b_analytics_ignore
         ,9999 b_rank
-        ,case when nvl(team,'') = '' then lower(username) || '-NoTeam' else team end b_azubuteam
+        ,case when nvl(team,'') = '' then 'NoTeam' else team end b_azubuteam
         into users_rollup
  FROM dev.public.users 
  ;

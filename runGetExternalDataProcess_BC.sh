@@ -31,7 +31,7 @@ fi
 
 
 daysback=30
-ZCdaysback=3
+ZCdaysback=4
 daysforward=30
 
 #daysback=1                       #REMOVE THIS!!!!!!

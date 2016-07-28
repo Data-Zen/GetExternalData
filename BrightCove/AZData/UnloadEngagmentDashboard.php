@@ -27,12 +27,12 @@ SELECT id
                 , bc_video_seconds_viewed AS video_view_amount_second
                 , video_peak_ccu
                 , CASE 
-                                WHEN video_duration > 0
-                                                AND type = 1
+                                WHEN zc_duration_in_ms > 0
+                                                AND bc_azvideotype = \'CH\'
                                                 THEN CASE 
-                                                                                WHEN video_view_amount_second / (video_duration / 1000) < 1
+                                                                                WHEN bc_video_seconds_viewed / (zc_duration_in_ms / 1000) < 1
                                                                                                 THEN 1
-                                                                                ELSE video_view_amount_second / (video_duration / 1000)
+                                                                                ELSE bc_video_seconds_viewed / (zc_duration_in_ms / 1000)
                                                                                 END
                                 ELSE NULL
                                 END AS video_average_ccu

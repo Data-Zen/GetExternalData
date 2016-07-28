@@ -35,8 +35,8 @@ include './BrightCove/credentials/BrightCoveCredentials.php';
 $connect = pg_connect($BrightCoveReadOnlyCredentials);
 if ($backfill ==0)
 {
-$sql= "select isnull(max(dt)-$daysback+$a,getdate()-479)::date maxdt, dateadd(day,1,isnull(max(dt)-$daysback+$a,getdate()-479))::date from public.bc_videos";
-
+#$sql= "select isnull(max(dt)-$daysback+$a,getdate()-479)::date maxdt, dateadd(day,1,isnull(max(dt)-$daysback+$a,getdate()-479))::date from public.bc_videos";
+$sql= "select dateadd(day,$a,isnull(max(dt)-$daysback,getdate()-479))::date maxdt, dateadd(day,$a+1,isnull(max(dt)-$daysback,getdate()-479))::date from public.bc_videos";
 }
 else
 {
